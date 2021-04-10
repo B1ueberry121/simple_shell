@@ -11,16 +11,9 @@
 #include <sys/mman.h>
 #include <errno.h>
 
-#define INPUT_SIZE 510
-#define CUTTING_WORD " \n"
-#define ENDING_WORD "exit"
-#define RESET 0
-
-void DisplayPrompt(void);
-char **execFunction(char *input, char **argv, int *saf, int *cmdlen);
-void trashcoll(char **argv, int size);
-
-static int *numofcmd;
-static int *cmdlen;
+int _putchar(char ch, int a);
+int _puts(char *str, int a);
+int strlen(char *str);
+int strcmp(char *str1, char *str2);
 
 #endif
