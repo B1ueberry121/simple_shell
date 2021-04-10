@@ -13,7 +13,7 @@
 
 int _putchar(char ch, int a);
 int _puts(char *str, int a);
-int strlen(char *str);
-int strcmp(char *str1, char *str2);
+int _strlen(char *str);
+int _strcmp(char *str1, char *str2);
 
 #endif

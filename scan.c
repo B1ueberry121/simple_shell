@@ -1,8 +1,7 @@
 #include "holberton.h"
 
-char *_scan(int a)
+char *_scan(char *buf, int a)
 {
-	char buf[128];
 	read(a, buf, sizeof(buf));
-	return (&buf);
+	return (buf);
 }
