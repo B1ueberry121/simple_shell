@@ -23,7 +23,7 @@ int _puts(char *str)
 }
 
 /**
- * strlen - gets the length of a string
+ * _strlen - gets the length of a string
  * @str: ptr variable
  * Return: size of bytes it needs
  */
@@ -39,7 +39,7 @@ int _strlen(char *str)
 }
 
 /**
- * strcmp - compares charecters in two strings
+ * _strcmp - compares charecters in two strings
  * @str1: first str
  * @str2: second str
  * Return: the result of the comparison
