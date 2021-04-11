@@ -7,30 +7,30 @@
 
 char *get_input(void)
 {
-        char *buffer = NULL;
-        size_t bufsize = 1024;
-        int bytesRead = 0;
+	char *buffer = NULL;
+	size_t bufsize = 1024;
+	int bytesRead = 0;
 
-        buffer = malloc(sizeof(char) * bufsize);
+	buffer = malloc(sizeof(char) * bufsize);
 
-        bytesRead = read(STDIN_FILENO, buffer, bufsize);
+	bytesRead = read(STDIN_FILENO, buffer, bufsize);
 
-        if (bytesRead == 0)
-        {
-                _putchar('\n');
-                free(buffer);
-                exit(EXIT_SUCCESS);
-        }
-        else if (bytesRead == -1)
-        {
-                perror("Error: could not read");
-                exit(EXIT_FAILURE);
-        }
+	if (bytesRead == 0)
+	{
+		_putchar('\n');
+		free(buffer);
+		exit(EXIT_SUCCESS);
+	}
+	else if (bytesRead == -1)
+	{
+		perror("Error: could not read");
+		exit(EXIT_FAILURE);
+	}
 
-        buffer[bytesRead - 1] = '\0';
-        fflush(stdin);
+	buffer[bytesRead - 1] = '\0';
+	fflush(stdin);
 
-        return (buffer);
+	return (buffer);
 }
 
 /**
@@ -41,24 +41,24 @@ char *get_input(void)
 
 char **str_to_arg(char *line)
 {
-        char **args;
-        int index;
-        char delim[] = "\n ";
+	char **args;
+	int index;
+	char delim[] = "\n ";
 
-        args = malloc(100 * sizeof(char *));
-        if (args == NULL)
-                exit(EXIT_FAILURE);
+	args = malloc(100 * sizeof(char *));
+	if (args == NULL)
+		exit(EXIT_FAILURE);
 
-        args[0] = strtok(line, delim);
+	args[0] = strtok(line, delim);
 
-        for (index = 0; args[index] != NULL; index++)
-        {
-                args[index + 1] = strtok(NULL, delim);
-        }
+	for (index = 0; args[index] != NULL; index++)
+	{
+		args[index + 1] = strtok(NULL, delim);
+	}
 
-        args[index + 1] = NULL;
+	args[index + 1] = NULL;
 
-        return (args);
+	return (args);
 }
 
 /**
@@ -69,27 +69,27 @@ char **str_to_arg(char *line)
 
 int spw_process(char *args[])
 {
-        pid_t forkedPid;
-        int status = 0, wstatus;
+	pid_t forkedPid;
+	int status = 0, wstatus;
 
-        forkedPid = fork();
-        if (forkedPid == -1)
-        {
-                perror("Error: forking");
-        }
+	forkedPid = fork();
+	if (forkedPid == -1)
+	{
+		perror("Error: forking");
+	}
 
-        if (forkedPid == 0)
-        {
-                if (execve(args[0], args, NULL) == -1)
-                {
-                        status = 1;
-                        return (status);
-                }
-        }
-        else
-        {
-                wait(&wstatus);
-        }
+	if (forkedPid == 0)
+	{
+		if (execve(args[0], args, NULL) == -1)
+		{
+			status = 1;
+			return (status);
+		}
+	}
+	else
+	{
+		wait(&wstatus);
+	}
 
-        return (status);
+	return (status);
 }
