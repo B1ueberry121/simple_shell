@@ -11,9 +11,16 @@
 #include <sys/mman.h>
 #include <errno.h>
 
-int _putchar(char ch, int a);
-int _puts(char *str, int a);
+extern char **environ;
+
+int _putchar(char ch);
+int _puts(char *str);
 int _strlen(char *str);
 int _strcmp(char *str1, char *str2);
+char *get_input(void);
+char **str_to_arg(char *line);
+int spw_process(char *args[]);
+char *_getenv(const char *name);
+
 
 #endif

@@ -3,25 +3,23 @@
 /**
  * _putchar - prints a single charater to stdout
  * @ch: char variable
- * @a: int
  * Return: chars
  */
 
-int _putchar(char ch, int a)
+int _putchar(char ch)
 {
-	return (write(a, &ch, 1));
+	return (write(STDOUT_FILENO, &ch, 1));
 }
 
 /**
  * _puts - prints a string of character to stdout
  * @str: ptr variable for a string
- * @a: int
  * Return: returns a string
  */
 
-int _puts(char *str, int a)
+int _puts(char *str)
 {
-	return (write(a, str, _strlen(str)));
+	return (write(STDOUT_FILENO, str, _strlen(str)));
 }
 
 /**
@@ -30,12 +28,13 @@ int _puts(char *str, int a)
  * Return: size of bytes it needs
  */
 
-int strlen(char *str)
+int _strlen(char *str)
 {
 	int bytes;
 
 	for (bytes = 0; str[bytes] != '\0'; bytes++)
-
+	{
+	}
 	return (bytes);
 }
 
@@ -46,7 +45,7 @@ int strlen(char *str)
  * Return: the result of the comparison
  */
 
-int strcmp(char *str1, char *str2)
+int _strcmp(char *str1, char *str2)
 {
 	int ind;
 
