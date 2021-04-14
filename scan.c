@@ -8,26 +8,27 @@
 char *get_input(void)
 {
 	char *buffer = NULL;
-	size_t bufsize = 1024;
-	int bytesRead = 0;
+	size_t bufsize = 0;
+	int bytesread = 0;
 
-	buffer = malloc(sizeof(char) * bufsize);
+	bytesread = getline(&buffer, &bufsize, stdin);
 
-	bytesRead = read(STDIN_FILENO, buffer, bufsize);
-
-	if (bytesRead == 0)
+	if (bytesread == EOF)
 	{
-		_putchar('\n');
+		if (isatty(STDIN_FILENO) == 1)
+		{
+			_putchar('\n');
+		}
 		free(buffer);
 		exit(EXIT_SUCCESS);
 	}
-	else if (bytesRead == -1)
+	else if (bytesread == -1)
 	{
 		perror("Error: could not read");
 		exit(EXIT_FAILURE);
 	}
 
-	buffer[bytesRead - 1] = '\0';
+	buffer[bytesread - 1] = '\0';
 	fflush(stdin);
 
 	return (buffer);
@@ -42,21 +43,22 @@ char *get_input(void)
 char **str_to_arg(char *line)
 {
 	char **args;
-	int index;
+	int ind;
 	char delim[] = "\n ";
 
-	args = malloc(100 * sizeof(char *));
+	args = malloc(sizeof(char *) * 100);
 	if (args == NULL)
+	{
 		exit(EXIT_FAILURE);
-
+	}
 	args[0] = strtok(line, delim);
 
-	for (index = 0; args[index] != NULL; index++)
+	for (ind = 0; args[ind] != NULL; ind++)
 	{
-		args[index + 1] = strtok(NULL, delim);
+		args[ind + 1] = strtok(NULL, delim);
 	}
 
-	args[index + 1] = NULL;
+	args[ind + 1] = NULL;
 
 	return (args);
 }
@@ -89,7 +91,38 @@ int spw_process(char *args[])
 	else
 	{
 		wait(&wstatus);
+		EXIT_CODE = WEXITSTATUS(wstatus);
 	}
 
 	return (status);
+}
+
+/**
+ * _checkbuilts - checks if the user input equals one of the shell kwords
+ * @line: users input
+ */
+
+void _checkbuilts(char *line)
+{
+	int ind;
+
+	if (_strcmp(line, "exit") == 0)
+	{
+		free(line);
+		exit(EXIT_CODE);
+	}
+
+	else if (_strcmp(line, "env") == 0)
+	{
+		for (ind = 0; environ[ind]; ind++)
+		{
+			_puts(environ[ind]);
+			_putchar('\n');
+		}
+		return;
+	}
+	else
+	{
+		return;
+	}
 }

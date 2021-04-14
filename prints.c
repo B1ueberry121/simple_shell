@@ -33,8 +33,8 @@ int _strlen(char *str)
 	int bytes;
 
 	for (bytes = 0; str[bytes] != '\0'; bytes++)
-	{
-	}
+		;
+
 	return (bytes);
 }
 
@@ -58,4 +58,38 @@ int _strcmp(char *str1, char *str2)
 	}
 
 	return (str1[ind] - str2[ind]);
+}
+
+/**
+ * _strdup - returns a duplicate of a given string
+ * @str: a string
+ * Return: a pointer to the duplicate string
+ */
+
+char *_strdup(char *str)
+{
+	int ind, len = 0;
+	char *dup;
+
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	for (ind = 0; str[ind] != '\0'; ind++)
+	{
+		len++;
+	}
+
+	dup = malloc((sizeof(char) * len) + 1);
+
+	if (dup == NULL)
+	{
+		return (NULL);
+	}
+	for (ind = 0; ind <= len; ind++)
+	{
+		dup[ind] = str[ind];
+	}
+
+	return (dup);
 }
