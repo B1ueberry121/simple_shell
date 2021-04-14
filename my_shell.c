@@ -7,42 +7,44 @@
 
 int main(void)
 {
-	char *line, **args;
-	int flag, interactor = isatty(STDIN_FILENO), ind;
+	char *line, **args, *path, **drc, *entpath;
+	int flag = 0, interactor = isatty(STDIN_FILENO), ind = 0, pathfind = 0;
+	struct stat st;
 
 	do {
 		if (interactor == 1)
 			_puts("($) ");
-
 		line = get_input();
+		_checkbuilts(line);
+		args = str_to_arg(line);
+		path = _getenv("PATH");
+		drc = _path(path);
 
-		if (_strcmp(line, "exit") == 0)
+		while (drc[ind])
 		{
-			interactor = 0;
-		}
-		else if (_strcmp(line, "env") == 0)
-		{
-
-		for (ind = 0; environ[ind]; ind++)
-		{
-			_puts(environ[ind]);
-				_putchar('\n');
-			}
-		}
-		else
-		{
-			args = str_to_arg(line);
-			flag = spw_process(args);
-			if (flag == 1)
+			entpath = _strcat(drc[ind], args[0]);
+			if (stat(entpath, &st) == 0)
 			{
-				perror("execution fail");
-				free(line);
-				free(args);
-				exit(EXIT_FAILURE);
+				args[0] = entpath;
+				pathfind = 1;
+				break;
 			}
-			free(args);
+			else
+			{
+				free(entpath);
+				ind++;
+			}
 		}
-		free(line);
-	} while (interactor);
-		return (0);
+		flag = spw_process(args);
+		if (flag == 1)
+		{
+			perror(args[0]);
+			_free(line, args, path, drc);
+			exit(127);
+		}
+		if (pathfind == 1)
+			free(entpath);
+		_free(line, args, path, drc);
+	} while (1);
+	return (0);
 }
