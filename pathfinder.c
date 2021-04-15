@@ -61,9 +61,9 @@ char **_path(char *path)
 
 	drc[0] = strtok(path, del);
 
-	for (drc = 0; drc[ind + 1] != NULL; ind++)
+	for (ind = 0; drc[ind] != NULL; ind++)
 	{
-		drc[ind + 1] = strtok(NULL, del);
+		drc[ind] = strtok(NULL, del);
 	}
 	return (drc);
 }

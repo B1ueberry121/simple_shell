@@ -19,7 +19,6 @@ int main(void)
 		args = str_to_arg(line);
 		path = _getenv("PATH");
 		drc = _path(path);
-
 		while (drc[ind])
 		{
 			entpath = _strcat(drc[ind], args[0]);
