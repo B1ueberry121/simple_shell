@@ -9,7 +9,7 @@ char *get_input(void)
 {
 	char *buffer = NULL;
 	size_t bufsize = 0;
-	int bytesread = 0;
+	int bytesread = 0, ind = 0;
 
 	bytesread = getline(&buffer, &bufsize, stdin);
 
@@ -22,13 +22,24 @@ char *get_input(void)
 		free(buffer);
 		exit(EXIT_SUCCESS);
 	}
-	else if (bytesread == -1)
+	if (bytesread == 1)
 	{
-		perror("Error: could not read");
-		exit(EXIT_FAILURE);
+		free(buffer);
+		return (NULL);
 	}
 
 	buffer[bytesread - 1] = '\0';
+
+	while (buffer[ind] == ' ' || buffer[ind] == '\t')
+	{
+		if (buffer[ind + 1] == '\0')
+		{
+			free(buffer);
+			return (NULL);
+		}
+		ind++;
+	}
+
 	fflush(stdin);
 
 	return (buffer);
@@ -100,9 +111,10 @@ int spw_process(char *args[])
 /**
  * _checkbuilts - checks if the user input equals one of the shell kwords
  * @line: users input
+ * Return: 1 if the input matches one of the builtins if not 0
  */
 
-void _checkbuilts(char *line)
+int _checkbuilts(char *line)
 {
 	int ind;
 
@@ -111,7 +123,6 @@ void _checkbuilts(char *line)
 		free(line);
 		exit(EXIT_CODE);
 	}
-
 	else if (_strcmp(line, "env") == 0)
 	{
 		for (ind = 0; environ[ind]; ind++)
@@ -119,10 +130,11 @@ void _checkbuilts(char *line)
 			_puts(environ[ind]);
 			_putchar('\n');
 		}
-		return;
+		free(line);
+		return (1);
 	}
 	else
 	{
-		return;
+		return (0);
 	}
 }

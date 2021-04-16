@@ -14,7 +14,7 @@ extern char **environ;
 int __attribute((unused)) EXIT_CODE;
 
 void _free(char *line, char **args, char *path, char **drc);
-void _checkbuilts(char *line);
+int _checkbuilts(char *line);
 char **_path(char *path);
 char *_strdup(char *str);
 char *_strcat(char *dest, char *src);

@@ -13,9 +13,12 @@ int main(void)
 
 	do {
 		if (interactor == 1)
-			_puts("($) ");
+			_puts("$ ");
 		line = get_input();
-		_checkbuilts(line);
+		if (line == NULL)
+			continue;
+		if (_checkbuilts(line))
+			continue;
 		args = str_to_arg(line);
 		path = _getenv("PATH");
 		drc = _path(path);
